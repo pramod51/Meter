@@ -2,61 +2,62 @@ package com.arcerr.meter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.res.Resources;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.arcerr.meter.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
-    final String TAG=MainActivity.class.getSimpleName();
-    int minWeight=0;
+    final String TAG = MainActivity.class.getSimpleName();
+    int minWeight = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+        setContentView(binding.getRoot());
 
 
-
-
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this, RecyclerView.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         binding.recyclerView.setLayoutManager(linearLayoutManager);
-        MeterAdapter meterAdapter=new MeterAdapter(this);
+        MeterAdapter meterAdapter = new MeterAdapter(this);
 
         binding.recyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
 
                 binding.recyclerView.scrollToPosition(50);
-                LinearLayoutManager layoutManager= ((LinearLayoutManager) binding.recyclerView.getLayoutManager());
+                LinearLayoutManager layoutManager = ((LinearLayoutManager) binding.recyclerView.getLayoutManager());
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
                 int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
 
                 int centerPosition = (firstVisibleItemPosition + lastVisibleItemPosition) / 2;
-                minWeight=centerPosition;
+                minWeight = centerPosition;
                 meterAdapter.setLeftWidth(centerPosition);
                 meterAdapter.setMiddlePos(centerPosition);
-                binding.textView.setText((centerPosition- minWeight +1)+" Kg");
-                Log.v(MainActivity.class.getSimpleName(),"center=="+centerPosition);
+                binding.textView.setText(String.valueOf(centerPosition - minWeight + 1));
+                Log.v(MainActivity.class.getSimpleName(), "center==" + centerPosition);
                 binding.recyclerView.setVisibility(View.VISIBLE);
                 meterAdapter.notifyItemChanged(centerPosition);
 
             }
-        },1);
+        }, 1);
 
 
         binding.recyclerView.setVisibility(View.INVISIBLE);
@@ -91,24 +92,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 //super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager layoutManager= ((LinearLayoutManager) recyclerView.getLayoutManager());
+                LinearLayoutManager layoutManager = ((LinearLayoutManager) recyclerView.getLayoutManager());
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
                 int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
 
                 int centerPosition = (firstVisibleItemPosition + lastVisibleItemPosition) / 2;
                 binding.recyclerView.smoothScrollToPosition(firstVisibleItemPosition);
                 meterAdapter.setMiddlePos(centerPosition);
-                binding.textView.setText((centerPosition- minWeight +1)+" Kg");
+                binding.textView.setText(String.valueOf(centerPosition - minWeight + 1));
                 //meterAdapter.notifyItemChanged(centerPosition);
                 meterAdapter.notifyDataSetChanged();
             }
         });
 
+        setGradientOnTextView(binding.textView);
+        setGradientOnTextView(binding.textView2);
 
+    }
 
+    public static void setGradientOnTextView(TextView textView) {
+        TextPaint paint = textView.getPaint();
+        float width = paint.measureText((String) textView.getText());
 
-
-
+        Shader textShader = new LinearGradient(0, 0, width, textView.getTextSize(),
+                new int[]{
+                        ContextCompat.getColor(textView.getContext(), R.color.start_color),
+                        ContextCompat.getColor(textView.getContext(), R.color.end_color),
+                }, null, Shader.TileMode.CLAMP);
+        textView.getPaint().setShader(textShader);
     }
 
 }

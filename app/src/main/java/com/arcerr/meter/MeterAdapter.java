@@ -19,10 +19,11 @@ import com.arcerr.meter.databinding.SmallHeightItemBinding;
 import java.util.List;
 
 public class MeterAdapter extends RecyclerView.Adapter<MeterAdapter.ViewHolder> {
-    public interface SelectedPosition{
+    public interface SelectedPosition {
         void onSelectedPosition(int pos);
     }
-    int m=1,l=2,s=0,i=-1;
+
+    int m = 1, l = 2, s = 0, i = -1;
     Context context;
 
     public MeterAdapter(Context context) {
@@ -30,13 +31,13 @@ public class MeterAdapter extends RecyclerView.Adapter<MeterAdapter.ViewHolder> 
     }
 
     SelectedPosition selectedPosition;
-    int middlePos=0;
+    int middlePos = 0;
 
     public void setMiddlePos(int middlePos) {
         this.middlePos = middlePos;
     }
 
-    int leftWidth=0;
+    int leftWidth = 0;
 
     public void setLeftWidth(int leftWidth) {
         this.leftWidth = leftWidth;
@@ -46,14 +47,14 @@ public class MeterAdapter extends RecyclerView.Adapter<MeterAdapter.ViewHolder> 
     @Override
     public int getItemViewType(int position) {
         //return super.getItemViewType(position);
-        if (position<leftWidth)
+        if (position < leftWidth)
             return i;
-        if ((position-leftWidth+1)%10==0) {
-            if (position==middlePos)
+        if ((position - leftWidth + 1) % 10 == 0) {
+            if (position == middlePos)
                 return l;
             return m;
         }
-        if (position==middlePos)
+        if (position == middlePos)
             return l;
         return s;
     }
@@ -61,13 +62,13 @@ public class MeterAdapter extends RecyclerView.Adapter<MeterAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType==m)
-        return new ViewHolder(MediumHeightItemBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
-        if (viewType==l)
-        return new ViewHolder(LongHeightItemBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
-        if (viewType==i)
-            return new ViewHolder(InvisibleItemBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
-        SmallHeightItemBinding binding=SmallHeightItemBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+        if (viewType == m)
+            return new ViewHolder(MediumHeightItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        if (viewType == l)
+            return new ViewHolder(LongHeightItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        if (viewType == i)
+            return new ViewHolder(InvisibleItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        SmallHeightItemBinding binding = SmallHeightItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
         return new ViewHolder(binding);
 
@@ -81,7 +82,6 @@ public class MeterAdapter extends RecyclerView.Adapter<MeterAdapter.ViewHolder> 
     }
 
 
-
     @Override
     public int getItemCount() {
         return 250;
@@ -90,21 +90,24 @@ public class MeterAdapter extends RecyclerView.Adapter<MeterAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private SmallHeightItemBinding smallHeightBinding;
         private MediumHeightItemBinding mediumHeightBinding;
+
         public ViewHolder(@NonNull SmallHeightItemBinding smallHeightBinding) {
             super(smallHeightBinding.getRoot());
-            this.smallHeightBinding=smallHeightBinding;
+            this.smallHeightBinding = smallHeightBinding;
         }
+
         public ViewHolder(@NonNull MediumHeightItemBinding mediumHeightBinding) {
             super(mediumHeightBinding.getRoot());
-            this.mediumHeightBinding=mediumHeightBinding;
+            this.mediumHeightBinding = mediumHeightBinding;
         }
+
         public ViewHolder(@NonNull LongHeightItemBinding mediumHeightBinding) {
             super(mediumHeightBinding.getRoot());
         }
+
         public ViewHolder(@NonNull InvisibleItemBinding mediumHeightBinding) {
             super(mediumHeightBinding.getRoot());
         }
-
 
 
     }
