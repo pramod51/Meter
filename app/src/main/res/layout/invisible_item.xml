@@ -3,14 +3,20 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <View
-        android:id="@+id/small"
-        android:layout_width="3dp"
-        android:layout_height="30dp"
+    <LinearLayout
+        android:layout_width="18dp"
+        android:gravity="center_horizontal"
+
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="60dp"/>
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/small"
+            android:layout_width="3dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="60dp"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

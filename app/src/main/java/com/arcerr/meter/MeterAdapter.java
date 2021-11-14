@@ -50,12 +50,10 @@ public class MeterAdapter extends RecyclerView.Adapter<MeterAdapter.ViewHolder> 
         if (position < leftWidth)
             return i;
         if ((position - leftWidth + 1) % 10 == 0) {
-            if (position == middlePos)
-                return l;
             return m;
         }
-        if (position == middlePos)
-            return l;
+        /*if (position == middlePos)
+            return l;*/
         return s;
     }
 

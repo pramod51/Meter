@@ -41,8 +41,7 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                binding.recyclerView.scrollToPosition(50);
+                binding.recyclerView.scrollToPosition(40);
                 LinearLayoutManager layoutManager = ((LinearLayoutManager) binding.recyclerView.getLayoutManager());
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
                 int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
@@ -50,11 +49,10 @@ public class MainActivity extends AppCompatActivity {
                 int centerPosition = (firstVisibleItemPosition + lastVisibleItemPosition) / 2;
                 minWeight = centerPosition;
                 meterAdapter.setLeftWidth(centerPosition);
-                meterAdapter.setMiddlePos(centerPosition);
                 binding.textView.setText(String.valueOf(centerPosition - minWeight + 1));
                 Log.v(MainActivity.class.getSimpleName(), "center==" + centerPosition);
                 binding.recyclerView.setVisibility(View.VISIBLE);
-                meterAdapter.notifyItemChanged(centerPosition);
+
 
             }
         }, 1);
@@ -69,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 //super.onScrollStateChanged(recyclerView, newState);
 
-                /*LinearLayoutManager layoutManager= ((LinearLayoutManager) recyclerView.getLayoutManager());
+                LinearLayoutManager layoutManager= ((LinearLayoutManager) recyclerView.getLayoutManager());
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
                 int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
 
@@ -78,11 +76,11 @@ public class MainActivity extends AppCompatActivity {
                 if (newState==RecyclerView.SCROLL_STATE_IDLE)
                 binding.recyclerView.smoothScrollToPosition(firstVisibleItemPosition);
                 Log.v(MainActivity.class.getSimpleName(),"center=="+centerPosition);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                /*LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
-                );*/
-                /*if ((firstVisibleItemPosition-minWeight+1))
+                );
+                if ((firstVisibleItemPosition-minWeight+1))
                 params.setMargins(8,0,0,0);
                 binding.longHeight.setLayoutParams(params);*/
 
@@ -92,16 +90,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 //super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager layoutManager = ((LinearLayoutManager) recyclerView.getLayoutManager());
+                /*LinearLayoutManager layoutManager = ((LinearLayoutManager) recyclerView.getLayoutManager());
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
                 int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
 
                 int centerPosition = (firstVisibleItemPosition + lastVisibleItemPosition) / 2;
                 binding.recyclerView.smoothScrollToPosition(firstVisibleItemPosition);
-                meterAdapter.setMiddlePos(centerPosition);
-                binding.textView.setText(String.valueOf(centerPosition - minWeight + 1));
-                //meterAdapter.notifyItemChanged(centerPosition);
-                meterAdapter.notifyDataSetChanged();
+                binding.textView.setText(String.valueOf(centerPosition - minWeight + 1));*/
+
             }
         });
 
